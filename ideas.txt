@@ -1,0 +1,19 @@
+Despliegue de Winforce
+
+usuario
+
+Menu de opciones:
+    1. Despliegue de ambiente
+    2. Actualizacion de ambiente
+    3. Actividades 
+
+1. master || rama
+    (rama='master') ? true:false
+        rama
+    git clone http  ${rama} (INQUIRER - LIBRERIA)
+
+2. Copia de configuraciones GLOBALES:
+    switch (repo)
+        comandos de copia (INQUIRER - LIBRERIA)
+
+
