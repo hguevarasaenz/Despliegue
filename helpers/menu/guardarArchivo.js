@@ -1,7 +1,10 @@
 const fs = require('fs');
 
 // const {data} = require('../db/data.json')
-const archivo = './db/usuariosData.json';
+const rutaCompleta = __dirname;
+const posicion = rutaCompleta.indexOf('helpers');
+// const archivo = './db/menu.json';
+const archivo = rutaCompleta.substring(0,posicion)+'db/menu.json';
 
 const guardarDB = (data) =>{
     fs.writeFileSync(archivo, JSON.stringify(data));
@@ -31,11 +34,12 @@ const leerDB = async() =>{
 
 
 const leerPHP = async() =>{
-    const archivoPHP = '../db/soporte_asesor_casos_insert.php'
+    const archivoPHP = '../../db/soporte_asesor_casos_insert.php'
 
     if(!fs.existsSync(archivoPHP)){
         
-        return console.log('no existe');;  
+        // return console.log('no existe');
+        return null;  
     }
 
     try{
@@ -55,7 +59,7 @@ const leerPHP = async() =>{
 }
 
 
-leerPHP();
+// leerPHP();
 
 
 

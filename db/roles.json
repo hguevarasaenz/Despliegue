@@ -1,0 +1,22 @@
+[
+    {
+        "id":"1",
+        "rol":"1",
+        "desc":"bloqueado"
+    },
+    {
+        "id":"2",
+        "rol":"2",
+        "desc":"administrador"
+    },
+    {
+        "id": "3",
+        "rol": "3",
+        "desc": "supersvisor"
+    },
+    {
+        "id": "4",
+        "rol": "4",
+        "desc": "usuario"
+    }
+]

@@ -1,0 +1,75 @@
+[
+    {
+        "id": "1",
+        "value": "salir",
+        "name": "Salir",
+        "tipoRol": [
+            {
+                "id": "2",
+                "rol": "2",
+                "desc": "administrador"
+            },
+            {
+                "id": "3",
+                "rol": "3",
+                "desc": "supersvisor"
+            },
+            {
+                "id": "4",
+                "rol": "4",
+                "desc": "usuario"
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "value": "crear-usuario",
+        "name": "Crear usuarios",
+        "tipoRol": [
+            {
+                "id": "2",
+                "rol": "2",
+                "desc": "administrador"
+            },
+            {
+                "id": "3",
+                "rol": "3",
+                "desc": "supersvisor"
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "value": "listar-tarea",
+        "name": "Listar tarea",
+        "tipoRol": [
+            {
+                "id": "2",
+                "rol": "2",
+                "desc": "administrador"
+            },
+            {
+                "id": "3",
+                "rol": "3",
+                "desc": "supersvisor"
+            },
+            {
+                "id": "4",
+                "rol": "4",
+                "desc": "usuario"
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "value": "borrar-tarea",
+        "name": "Borrar Usuario",
+        "tipoRol": [
+            {
+                "id": "2",
+                "rol": "2",
+                "desc": "administrador"
+            }
+        ]
+    }
+]
