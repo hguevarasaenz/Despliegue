@@ -1,17 +1,20 @@
+require('dotenv').config();
 require('colors');
 const { guardarDB, leerDB: leerDBUsuarios } = require('./helpers/usuarios/guardarArchivo');
 const { inquirerMenu, pausa , leerInput } = require('./helpers/inquirer');
 const Tareas = require('./models/tareas');
 const Usuarios = require('./models/usuarios');
-const usuarioSesion = require('./models/usuarioSecion');
+const Login = require('./models/login');
+
 
 // const { mostrarMenu, pausa } = require('./helpers/chat');
 
 console.clear();
 
 
+
 const main = async() => {
-    console.log('Hola mundo');
+    // console.log('Hola mundo');
     let sesion = false;
 
     let opt = '';
@@ -28,26 +31,29 @@ const main = async() => {
     const respCorreo = await leerInput('Ingrese su correo para loguearse: ','input');
     const respContrasenia = await leerInput('Ingrese su contrasenia para loguearse: ','password');
 
-    const auth = new usuarioSesion();
-    const respAuth = await auth.autenticar(respCorreo,respContrasenia);
-    console.log(respAuth);
-    return;
+    const login = new Login();
+    const respAuth = await login.autenticar(respCorreo,respContrasenia);
+    // console.log('yujuuuu');
+    // console.log(respAuth);
+    // return;
+    sesion = respAuth.sesion;
+    
+    if(!sesion){
+        console.clear();
+        console.log(respAuth.message);
+        await pausa();
+        main();
+    }
+
+    // { sesion: true, status: 200, message: 'Inicio de sesión exitoso' }
+    // { sesion: false, status: 401, message: 'El usuario no existe.' }
+    // return;
 
 
-
-    // do {
-        
-    //     const respCorreo = await leerInput('Ingrese su correo para loguearse: ','input');
-    //     const respContrasenia = await leerInput('Ingrese su contrasenia para loguearse: ','password');
-
-
-        
-        
-    // } while ( opt !== '0' );
-
-    do {
+    while(opt !== '0' && sesion === true){
         //Imprimir el menú
-        opt = await inquirerMenu();
+        opt = await inquirerMenu(respAuth.user.rol);
+        
 
         switch(opt){
             case '1':
@@ -61,8 +67,24 @@ const main = async() => {
 
             case '2':
                 console.log(usuarios.listadoArr);
-                
+
             break;
+            case '3':
+                console.log(usuarios.listadoArr);
+            break;
+            case '4':
+                console.log(usuarios.listadoArr);
+            break;
+            case '5':
+                console.log(usuarios.listadoArr);
+            break;
+            case '6':
+                console.log(usuarios.listadoArr);
+            break;
+
+            default:
+            break;
+    
 
         }
     
@@ -70,7 +92,7 @@ const main = async() => {
 
         await pausa(); 
 
-    }while(opt !== '0' );
+    }
 
     
 }
