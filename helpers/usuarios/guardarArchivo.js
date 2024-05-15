@@ -1,7 +1,9 @@
 const fs = require('fs');
 
-// const {data} = require('../db/data.json')
-const archivo = './db/usuariosData.json';
+const rutaCompleta = __dirname;
+const posicion = rutaCompleta.indexOf('helpers');
+// const archivo = './db/usuariosData.json';
+const archivo = rutaCompleta.substring(0,posicion)+'db/usuariosData.json';
 
 const guardarDB = (data) =>{
     fs.writeFileSync(archivo, JSON.stringify(data));

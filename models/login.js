@@ -2,10 +2,11 @@ const fs = require('fs');
 const Usuarios = require('./usuarios');
 const { leerDB: leerDBUsuarios } = require('../helpers/usuarios/guardarArchivo');
 const md5 = require('md5');
+const UsuarioSesion = require('./usuarioSesion');
 require('colors');
 
 
-class usuarioSesion{
+class Login{
 
 
     constructor(){
@@ -14,12 +15,13 @@ class usuarioSesion{
 
     async autenticar(correo,contrasenia){
         let sesionBoolean = false;
+        let user ={};
 
         try{
             // Se declaran variables que formaran parte de la validación del login
             let contraseniaData = '';
             //Consulta la data que hay dentro de la Base de datos
-            const dataUsuarios = await this.traerDataUusarios();
+            const dataUsuarios = await this.traerDataUsarios();
             //Si hay data valida existencia de usuario y autentica si es correcto
             if(dataUsuarios){
                 const validaExistenciaUsuario = dataUsuarios.some(usuario => {
@@ -31,7 +33,16 @@ class usuarioSesion{
                     return resp;
                 });
                 if(validaExistenciaUsuario){
-                    if(contraseniaData === md5(contrasenia)){
+                    const isMatch = this.comparePassword(contraseniaData,contrasenia);
+                    if(isMatch){
+                        const usuario = dataUsuarios.filter(usuario => usuario.correo === correo);
+                        const { id, NombreCompletoUsuario, correo:correoUsuario, rol } = usuario[0];
+                        // console.log(usuario[0]);
+                        const usuarioSesion = new UsuarioSesion();
+                        usuarioSesion.userActivo(id, NombreCompletoUsuario, correoUsuario, contrasenia, rol);
+                        user = usuarioSesion.getJsonUsuario;
+                        
+                        // console.log(usuarioSesion);
                         sesionBoolean= true;
                     }else{
                         throw new Error(`Contraseña incorrecta.`);
@@ -45,7 +56,8 @@ class usuarioSesion{
             return {
                 "sesion":sesionBoolean,
                 "status": 200,
-                "message": "Inicio de sesión exitoso"
+                "message": "Inicio de sesión exitoso",
+                "user":user
               }
         }catch(err){
             const respErr = {
@@ -62,9 +74,13 @@ class usuarioSesion{
 
     }
 
-    async traerDataUusarios(){
+    async traerDataUsarios(){
         const data = await leerDBUsuarios();
         return data;
+    }
+
+    comparePassword(contraseniaData,contrasenia){
+        return (contraseniaData === md5(contrasenia))? true: false; 
     }
 
 }
@@ -72,7 +88,7 @@ class usuarioSesion{
 
 
 
-module.exports = usuarioSesion;
+module.exports = Login;
 
 // yo:
 // asi como se usa return Promise.reject para el catch, tambien se podria poner un return Promise.resolve para el try?

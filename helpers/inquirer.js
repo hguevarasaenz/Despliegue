@@ -1,56 +1,34 @@
-const inquirer = require('inquirer');
 require('colors');
+const inquirer = require('inquirer');
+const Menu = require('../models/menu');
+
+const menu = new Menu();
+// cambiar preguntas a una funcion para que logre retornar el array
+const preguntas = async (rol='0') => {
+    const choices = await menu.getMenuPorRol(rol);
+    return [
+        {
+            type: 'list',
+            name:'opcion',
+            message:'¿Qué desea hacer?',
+            // dentro de choices mandará a llamar una  funcion que te traiga los valores
+            choices: choices
+        }
+    ];
+} 
 
 
-const preguntas = [
-    {
-        type: 'list',
-        name:'opcion',
-        message:'¿Qué desea hacer?',
-        choices: [
-            {
-                value:'1',
-                name:`${'1.'.green} Crear usuarios`
-            },
-            {
-                value:'2',
-                name:`${'2.'.green} Listar tarea`
-            },
-            {
-                value:'3',
-                name:`${'3.'.green} Listar tareas completadas`
-            },
-            {
-                value:'4',
-                name:`${'4.'.green} Listar tareas pendientes`
-            },
-            {
-                value:'5',
-                name:`${'5.'.green} Completar tarea(s)`
-            },
-            {
-                value:'6',
-                name:`${'6.'.green} Borrar tarea`
-            },
-            {
-                value:'0',
-                name:`${'0.'.green} Salir`
-            },
-        ]
-    }
-];
-
-
-const inquirerMenu = async() =>{
+const inquirerMenu = async(rol) =>{
 
     console.clear();
     console.log('======================='.green);
     console.log('  Seleccione una opción'.white);
     console.log('=======================\n'.green);
 
-    const { opcion } = await inquirer.prompt(preguntas);
+    console.log();
+    const preguntasAsync = await preguntas(rol);
+    const { opcion } = await inquirer.prompt(preguntasAsync);
     return opcion;
-
 }
 
 
